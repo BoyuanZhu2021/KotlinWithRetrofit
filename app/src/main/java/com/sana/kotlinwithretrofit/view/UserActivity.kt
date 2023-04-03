@@ -1,5 +1,6 @@
 package com.sana.kotlinwithretrofit
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -82,18 +83,45 @@ class UserActivity : BaseActivity(), View.OnClickListener{
         startActivityForResult(intent, REQUEST_CODE)
     }
 
-    /* Sets up delete */
+    /* Sets up delete and update*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        // if RESULT_CODE is the code for deletion
         if(resultCode.equals(RESULT_CODE)){
-            try{
-                userAdapter.removeItem(position)
-                Toast.makeText(this, R.string.user_deleted, Toast.LENGTH_LONG).show()
-
+            try {
+                val positionToDelete = data?.getIntExtra("itemPositionToDelete", -1) ?: -1
+                println(positionToDelete)
+                if (positionToDelete == -1) {
+                    userAdapter.removeItem(position)
+                    Toast.makeText(this, R.string.user_deleted, Toast.LENGTH_LONG).show()
+                }
             }catch (e: Exception){
                 e.printStackTrace()
             }
         }
+
+        // if RESULT_CODE is the code for update
+        if (resultCode == Activity.RESULT_OK) {
+            val updatedItemPosition = data?.getIntExtra("updatedItemPosition", -1) ?: -1
+            val updatedUserName = data?.getStringExtra("updatedUserName")
+            val updatedUserType = data?.getStringExtra("updatedUserType")
+            val updatedWebsite = data?.getStringExtra("updatedWebsite")
+
+            /*
+            if (updatedItemPosition != -1) {
+                // Update your data list with the updated values
+                // Replace "yourDataList" with the name of the list that holds your data
+                yourDataList[updatedItemPosition].userName = updatedUserName
+                yourDataList[updatedItemPosition].userType = updatedUserType
+                yourDataList[updatedItemPosition].website = updatedWebsite
+
+                // Notify the adapter that the data has changed
+                userAdapter.notifyItemChanged(updatedItemPosition)
+
+            }
+            */
+        }
+
     }
 
     /* When click addItem */
