@@ -107,13 +107,19 @@ class UserActivity : BaseActivity(), View.OnClickListener{
             val updatedUserType = data?.getStringExtra("updatedUserType")
             val updatedWebsite = data?.getStringExtra("updatedWebsite")
 
+            userList[position].username = updatedUserName.toString()
+            userList[position].website = updatedWebsite.toString()
+            userList[position].userType = updatedUserType.toString()
+            userAdapter.notifyItemChanged(position)
+
             /*
             if (updatedItemPosition != -1) {
                 // Update your data list with the updated values
                 // Replace "yourDataList" with the name of the list that holds your data
-                yourDataList[updatedItemPosition].userName = updatedUserName
-                yourDataList[updatedItemPosition].userType = updatedUserType
-                yourDataList[updatedItemPosition].website = updatedWebsite
+                println(userList[position])
+                //userList[updatedItemPosition].username = updatedUserName
+                //yourDataList[updatedItemPosition].userType = updatedUserType
+                //yourDataList[updatedItemPosition].website = updatedWebsite
 
                 // Notify the adapter that the data has changed
                 userAdapter.notifyItemChanged(updatedItemPosition)

@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 data class User(
 
     @SerializedName("website")
-    val website: String,
+    var website: String,
 
     @SerializedName("login")
-    val username: String,
+    var username: String,
 
     //The user type is psw
     @SerializedName("type")
-    val userType: String,
+    var userType: String,
     //
 
     @SerializedName("avatar_url")
